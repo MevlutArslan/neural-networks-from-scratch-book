@@ -17,4 +17,4 @@ neurons = [
 ]
 
 for neuron in neurons:
-    print(neuron.calculate_output())
+    print(neuron.calculate_output_numpy())

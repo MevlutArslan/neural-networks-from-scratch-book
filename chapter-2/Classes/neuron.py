@@ -1,3 +1,5 @@
+import numpy as np
+
 
 class Neuron():
     def __init__(self, inputs: list, weights: list, bias: float):
@@ -14,7 +16,10 @@ class Neuron():
             weight = self.weights[i]
 
             output += inpt * weight
-        
+
         output += self.bias
 
         return output
+
+    def calculate_output_numpy(self):
+        return np.dot(self.weights, self.inputs) + self.bias
