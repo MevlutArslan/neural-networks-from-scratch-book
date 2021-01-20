@@ -11,7 +11,7 @@ predictions = np.argmax(softmax_outputs, axis=1)
 
 # If targets are one-hot encoded - convert them 
 print(len(class_targets.shape))
-
+# 
 if len(class_targets.shape) == 2:
     class_targets = np.argmax(class_targets, axis=1) # True evaluates to 1; False to 0
 
