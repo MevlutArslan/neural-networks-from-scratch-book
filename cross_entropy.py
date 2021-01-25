@@ -1,4 +1,5 @@
 import numpy as np
+from loss_class import Loss
 
 class Loss_CategoricalCrossentropy(Loss): # Forward pass
 
