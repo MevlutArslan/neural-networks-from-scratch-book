@@ -10,18 +10,19 @@ from sgd_optimizer import SGD_Optimizer
 X, y = spiral_data(samples=100, classes=3)
 
 # Create Dense layer with 2 input features and 3 output values
-dense1 = Layer_Dense(2, 3)
+dense1 = Layer_Dense(2, 64)
 
 # Create ReLU activation (to be used with Dense layer):
 activation1 = ReLUActivation()
 
 # Create second Dense layer with 3 input features (as we take output
 # of previous layer here) and 3 output values (output values)
-dense2 = Layer_Dense(3, 3)
+dense2 = Layer_Dense(64, 3)
 
 # Create Softmax classifier's combined loss and activation
 loss_activation = Activation_Softmax_Loss_CategoricalCrossentropy()
 
+optimizer = SGD_Optimizer(learning_rate=.85)
 
 for epoch in range(10001):
     # Perform a forward pass of our training data through this layer
@@ -51,10 +52,9 @@ for epoch in range(10001):
     # Backward pass
     loss_activation.backward(loss_activation.output, y)
     dense2.backward(loss_activation.dinputs)
+
     activation1.backward(dense2.dinputs)
     dense1.backward(activation1.dinputs)
-
-    optimizer = SGD_Optimizer(.5)
 
     optimizer.update_parameters(dense1)
     optimizer.update_parameters(dense2)
