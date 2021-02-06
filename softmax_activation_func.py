@@ -24,3 +24,34 @@ class SoftmaxActivation():
         probabilities = exp_values / np.sum(exp_values, axis=1, keepdims=True)
 
         self.output = probabilities
+
+    def backward(self, dvalues):
+
+        # will create a new array with the same shape(dimensions)
+        self.dinputs = np.empty_like(dvalues)
+
+        # New trick, using \ at the end of the for loop allows the for loop to
+        # continue on the next line :)
+        '''
+            enumerate returns a counter and the corresponding value
+            in our case it will return an iterator and a tuple containing 
+            self.output and dvalues
+        '''
+        for index, (single_output, single_dvalues) in \
+                enumerate(zip(self.output, dvalues)):
+
+            # flattens the array
+            single_output = single_output.reshape(-1, 1)
+
+            # we flattened the array to be able to use it in the below
+            # calculation
+
+            # calculates the jacobian matrix of the output
+            jacobian_matrix = np.diagflat(single_output) - \
+                np.dot(single_output, single_output.T)
+
+            # Calculate sample-wise gradient
+            # and add it to the array of sample gradients
+            
+            self.dinputs[index] = np.dot(jacobian_matrix,
+                                         single_dvalues)

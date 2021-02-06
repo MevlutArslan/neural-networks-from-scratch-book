@@ -22,16 +22,16 @@ class Loss_CategoricalCrossentropy(Loss):  # Forward pass
         negative_log_likelihoods = -np.log(correct_confidences)
         return negative_log_likelihoods
 
-    def backward(self, ground_truth_v, predicted_values_v):
+    def backward(self, dvalues, ground_truth_v):
 
-        sample_count = len(predicted_values_v)
+        sample_count = len(dvalues)
 
-        label_count = len(predicted_values_v[0])
+        label_count = len(dvalues[0])
 
         # If labels are sparse, turn them into one-hot vector
         if len(ground_truth_v.shape) == 1:
-            y_true = np.eye(label_count)[y_true]
+            ground_truth_v = np.eye(label_count)[ground_truth_v]
 
-        self.dinputs = -ground_truth_v / predicted_values_v
+        self.dinputs = -ground_truth_v / dvalues
 
         self.dinputs = self.dinputs / sample_count
