@@ -22,7 +22,7 @@ dense2 = Layer_Dense(64, 3)
 # Create Softmax classifier's combined loss and activation
 loss_activation = Activation_Softmax_Loss_CategoricalCrossentropy()
 
-optimizer = SGD_Optimizer(learning_rate=.85)
+optimizer = SGD_Optimizer(decay=1e-3)
 
 for epoch in range(10001):
     # Perform a forward pass of our training data through this layer
@@ -47,7 +47,8 @@ for epoch in range(10001):
 
     if not epoch % 100:
         print(f'epoch: {epoch}, ' +
-              f'acc: {accuracy:.3f}, ' + f'loss: {loss:.3f}')
+              f'acc: {accuracy:.3f}, ' + f'loss: {loss:.3f},'+
+              f'lr: {optimizer.current_learning_rate}')
 
     # Backward pass
     loss_activation.backward(loss_activation.output, y)
@@ -56,5 +57,7 @@ for epoch in range(10001):
     activation1.backward(dense2.dinputs)
     dense1.backward(activation1.dinputs)
 
+    optimizer.pre_update_params()
     optimizer.update_parameters(dense1)
     optimizer.update_parameters(dense2)
+    optimizer.post_update_params()
