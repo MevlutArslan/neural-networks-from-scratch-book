@@ -6,6 +6,7 @@ from layer_dense import Layer_Dense
 from relu_activation_func import ReLUActivation
 from softmax_ccel_combined import Activation_Softmax_Loss_CategoricalCrossentropy
 from sgd_optimizer import SGD_Optimizer
+from adagrad_optimizer import Optimizer_Adagrad
 # Create dataset
 X, y = spiral_data(samples=100, classes=3)
 
@@ -22,8 +23,8 @@ dense2 = Layer_Dense(64, 3)
 # Create Softmax classifier's combined loss and activation
 loss_activation = Activation_Softmax_Loss_CategoricalCrossentropy()
 
-optimizer = SGD_Optimizer(learning_rate=1.0, decay=1e-3, momentum=0.9)
-
+# optimizer = SGD_Optimizer(learning_rate=1.0, decay=1e-3, momentum=0.9)
+optimizer = Optimizer_Adagrad(decay=1e-5)
 for epoch in range(10001):
     # Perform a forward pass of our training data through this layer
     dense1.forward(X)
