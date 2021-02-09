@@ -8,6 +8,7 @@ from softmax_ccel_combined import Activation_Softmax_Loss_CategoricalCrossentrop
 from sgd_optimizer import SGD_Optimizer
 from adagrad_optimizer import Optimizer_Adagrad
 from rms_prop_optimizer import Rms_Prop_Optimizer
+from adam_optimizer import Adam_Optimizer
 
 # Create dataset
 X, y = spiral_data(samples=100, classes=3)
@@ -27,7 +28,8 @@ loss_activation = Activation_Softmax_Loss_CategoricalCrossentropy()
 
 # optimizer = SGD_Optimizer(learning_rate=1.0, decay=1e-3, momentum=0.9)
 # optimizer = Optimizer_Adagrad(decay=1e-5)
-optimizer = Rms_Prop_Optimizer(learning_rate=0.02, decay=1e-4, rho=0.999)
+# optimizer = Rms_Prop_Optimizer(learning_rate=0.02, decay=1e-4, rho=0.999)
+optimizer = Adam_Optimizer(learning_rate=0.05, decay=1e-6)
 
 for epoch in range(10001):
     # Perform a forward pass of our training data through this layer
