@@ -9,7 +9,7 @@ from main.classes.sgd_optimizer import SGD_Optimizer
 from main.classes.adagrad_optimizer import Optimizer_Adagrad
 from main.classes.rms_prop_optimizer import Rms_Prop_Optimizer
 from main.classes.adam_optimizer import Adam_Optimizer
-
+from main.classes.dropout_layer import Dropout_Layer
 # Create dataset
 X, y = spiral_data(samples=1000, classes=3)
 
@@ -35,6 +35,7 @@ loss_activation = Activation_Softmax_Loss_CategoricalCrossentropy()
 # optimizer = Rms_Prop_Optimizer(learning_rate=0.02, decay=1e-4, rho=0.999)
 optimizer = Adam_Optimizer(learning_rate=0.05, decay=1e-6)
 
+dropout_layer = Dropout_Layer(0.5)
 
 for epoch in range(10001):
     # Perform a forward pass of our training data through this layer
@@ -42,9 +43,11 @@ for epoch in range(10001):
     # Perform a forward pass through activation function
     # takes the output of first dense layer here
     activation1.forward(dense1.output)
+
+    dropout_layer.forward(activation1.output)
     # Perform a forward pass through second Dense layer
     # takes outputs of activation function of first layer as inputs
-    dense2.forward(activation1.output)
+    dense2.forward(dropout_layer.output)
 
     # activation2.forward(dense2.output)
 
@@ -80,7 +83,8 @@ for epoch in range(10001):
     loss_activation.backward(loss_activation.output, y)
     dense2.backward(loss_activation.dinputs)
 
-    activation1.backward(dense2.dinputs)
+    dropout_layer.backward(dense2.dinputs)
+    activation1.backward(dropout_layer.dinputs)
     dense1.backward(activation1.dinputs)
 
     optimizer.pre_update_params()
