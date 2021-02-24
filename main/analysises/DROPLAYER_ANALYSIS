@@ -1,0 +1,31 @@
+USING DROP LAYER
+
+512 neuron 4 layers:
+
+    Training 
+    Accuracy : 0.919 
+    Loss : 0.189
+
+    Validation
+    Accuracy : 0.893
+    Loss : 0.266
+
+16 Neuron 4 Layers:
+
+    Training
+    Accuracy : 0.586
+    Loss : 0.887
+
+    Validation
+    Accuracy : 0.640
+    Loss : 0.847
+
+3 Neuron 4 Layers:
+
+    Training 
+    Accuracy : 0.360
+    Loss : 1.083
+
+    Validation
+    Accuracy : 0.361
+    Loss : 1.082
