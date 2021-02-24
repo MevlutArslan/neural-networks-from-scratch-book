@@ -1,6 +1,6 @@
 import numpy as np
-from softmax_activation_func import SoftmaxActivation
-from cross_entropy import Loss_CategoricalCrossentropy
+from main.classes.softmax_activation_func import SoftmaxActivation
+from main.classes.cross_entropy import Loss_CategoricalCrossentropy
 
 
 #Calculating the gradients separately is about 7 times slower
